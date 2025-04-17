@@ -17,7 +17,7 @@ var MyStudent = /** @class */ (function () {
         this.stdId = 1234;
         this.stdName = 'park';
         this.age = 30;
-        this.gender = GenderType.Male;
+        this.gender = 'male';
         this.course = 'node.js';
         this.completed = true;
     }
@@ -37,9 +37,32 @@ function getInfo(id) {
         stdId: id,
         stdName: 'lee',
         age: 20,
-        gender: GenderType.Female,
+        gender: 'female',
         course: 'javascript',
         completed: true
     };
 }
 console.log(getInfo(5678));
+// any : 모든 타입을 허용하는 타입
+var anyVal_1 = 100;
+anyVal_1 = 'kim'; // 유효
+anyVal_1 = true; // 유효
+// 유니온 타입
+var anyVal_2;
+anyVal_2 = 100; // 유효
+anyVal_2 = 'kim'; // 유효
+var numStr = '100';
+var num = 100;
+// num = numStr // 에러
+numStr = num; // 유효
+if (typeof num === 'number') { // 타입가드
+    num = numStr; // 유효
+}
+function convertToString(val) {
+    return String(val);
+}
+function convertToNumber(val) {
+    return Number(val);
+}
+console.log(convertToString(numStr)); // '100'
+console.log(convertToNumber(numStr)); // 100
