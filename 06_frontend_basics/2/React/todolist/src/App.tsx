@@ -6,7 +6,14 @@ function App() {
   let name = "리액트";
 
   return (
-    <div className="App-header">
+    <div style={
+	    {
+		    backgroundColor : 'black',
+		    color : 'white',
+		    fontSize : '12px',
+		    fontWeight : 'bold'
+	    }
+    }>
       <h1>Hello, 
         {
           name === "리액트" ? (<h3>YES</h3>) : (<h3>NO</h3>)
