@@ -1,32 +1,107 @@
 export type ThemeName = "light" | "dark";
-type ColorKey = "primary" | "background" | "secondary" | "third";
+export type ColorKey = "primary" | "background" | "secondary" | "third" | "border" | "text";
+export type HeadingSize = "large" | "medium" | "small";
+export type ButtonSize = "large" | "medium" | "small";
+export type ButtonScheme = "primary" | "normal";
+export type LayoutWidth = "large" | "medium" | "small";
 
 export interface Theme {
     name: ThemeName;
-    // color: {
-    //     [key in ColorKey]: string;
-    // };
     color: Record<ColorKey, string>;
-
+    heading: {
+        [key in HeadingSize]: {
+            fontSize: string;
+        };
+    };
+    button: {
+        [key in ButtonSize]: {
+            fontSize: string;
+            padding: string;
+        };
+    };
+    buttonScheme: {
+        [key in ButtonScheme]: {
+            color: string;
+            background: string;
+        }
+    };
+    borderRadius: {
+        default: string;
+    };
+    layoutWidth: {
+        width: {
+            [key in LayoutWidth]: string;
+        }
+    }
 }
 
 export const light: Theme = {
     name: 'light',
     color: {
-        primary: 'brown',
-        background: 'lightgray',
-        secondary: 'blue',
+        primary: '#F7B436',
+        background: '#5F5F5F',
+        secondary: 'lightgray',
         third: "green",
+        border: "gray",
+        text: "black"
     },
+    heading: {
+        large: {
+            fontSize: '2rem'
+        },
+        medium: {
+            fontSize: '1.5rem'
+        },
+        small: {
+            fontSize: '1rem'
+        }
+    },
+    button: {
+        large: {
+            fontSize: '1.5rem',
+            padding: '1rem 2rem'
+        },
+        medium: {
+            fontSize: '1rem',
+            padding: '0.5rem 1rem'
+        },
+        small: {
+            fontSize: '0.5rem',
+            padding: '0.25rem 0.5rem'
+        }
+    },
+    buttonScheme: {
+        primary: {
+            color: 'white',
+            background: 'midnightblue'
+        },
+        normal: {
+            color: 'black',
+            background: 'lightgray'
+        }
+    },
+    borderRadius: {
+        default: '4px'
+    },
+    layoutWidth: {
+        width: {
+            large: '1020px',
+            medium: '760px',
+            small: '320px'
+        }
+    }
 };
 
 export const dark: Theme = {
+    ...light,
     name: 'dark',
     color: {
-        primary: 'coral',
-        background: 'midnightblue',
+        primary: '#F7B436',
+        background: '#A1A1A1',
         secondary: "darkblue",
-        third: "darkgreen"
+        third: "darkgreen",
+        border: "lightgray",
+        text: "white"
     },
 };
 
