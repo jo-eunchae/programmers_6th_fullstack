@@ -1,4 +1,11 @@
 {
     "livePreview.defaultPreviewPath": "/06_frontend_basics/1/prms-js-todo/test.html",
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    
+    "eslint.validate": [],
+    "eslint.enable": false,
+
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.enablePromptUseWorkspaceTsdk": true
 }
