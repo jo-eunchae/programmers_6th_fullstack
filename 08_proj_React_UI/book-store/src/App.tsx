@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "/books",
+    path: "/books", 
     element: <Layout><div>도서 목록</div></Layout>
   },
   {
