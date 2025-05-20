@@ -7,6 +7,8 @@ import Error from "./components/common/Error";
 import Detail from "./pages/Detail";
 import Home from "./pages/Home";
 import Signup from "./pages/Signup";
+import ResetPassword from "./pages/ResetPassword";
+import Login from "./pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +23,14 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Layout><Signup /></Layout>
+  },
+  {
+    path: "/reset",
+    element: <Layout><ResetPassword /></Layout>
+  },
+  {
+    path: "/login",
+    element: <Layout><Login /></Layout>
   },
 ]);
 

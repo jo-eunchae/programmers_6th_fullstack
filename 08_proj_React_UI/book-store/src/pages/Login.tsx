@@ -5,37 +5,38 @@ import Title from '../components/common/Title';
 import InputText from '../components/common/InputText';
 import Button from '../components/common/Button';
 import { Link, useNavigate } from 'react-router-dom';
-import { signup } from '../api/auth.api';
+import { login, signup } from '../api/auth.api';
 import { useAlert } from '../hooks/useAlert';
+import { SignupStyle } from './Signup';
+import { useAuthStore } from '../store/authStore';
 
 export interface SignupProps {
     email: string;
     password: string;
 };
 
-function Signup(){
+function Login(){
     const navigate = useNavigate();
     const showAlert = useAlert();
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
 
-    // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    //     event.preventDefault();
-    // };
+    const {isloggedIn, storeLogin, storeLogout} = useAuthStore();
 
     const { register, handleSubmit, formState: {errors}} = useForm<SignupProps>();
 
     const onSubmit = (data: SignupProps) => {
-        signup(data).then((res) => {
-            // 성공
-            showAlert("회원가입이 완료되었습니다.");
-            navigate('/login')
+        login(data).then((res) => {
+            // 상태 변화
+            storeLogin(res.token);
+
+            console.log(res.token);
+            showAlert("로그인 되었습니다.");
+            navigate("/");
         });
     };
     
     return (
     <>
-        <Title size="large">회원가입</Title>
+        <Title size="large">로그인</Title>
         <SignupStyle>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <fieldset>
@@ -56,7 +57,7 @@ function Signup(){
                 </fieldset>
                 <fieldset>
                     <Button type='submit' size='medium' scheme='primary'>
-                        회원가입
+                        로그인
                     </Button>
                 </fieldset>
                 <div className="info">
@@ -68,30 +69,4 @@ function Signup(){
     );
 };
 
-export const SignupStyle = styled.div`
-    maxwidth: ${({ theme }) => theme.layoutWidth.width.small};
-    margin: 80px auto;
-
-    fieldset {
-        border: 0;
-        padding: 0 0 8px 0;
-        .error-text {
-            color: red;
-        }
-    }
-
-    input {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    .info {
-        text-align: center;
-        padding: 16px 0 0 0;
-    }
-`;
-
-export default Signup;
+export default Login;

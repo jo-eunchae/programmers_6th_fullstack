@@ -8,11 +8,15 @@ import { Category } from "../../models/category.model";
 import userEvent from "@testing-library/user-event";
 import { fetchCategory } from "../../api/category.api";
 import { useCategory } from "../../hooks/useCategory";
+import { useAuthStore } from "../../store/authStore";
+import Login from "../../pages/Login";
 const LoginIcon = FaSignInAlt as unknown as React.FC;
 const SignUpIcon = FaRegUser as unknown as React.FC;
 
 function Header(){
   const { category} = useCategory();
+
+  const {isloggedIn, storeLogout} = useAuthStore();
 
   return (
       <HeaderStyle>
@@ -33,22 +37,28 @@ function Header(){
             </ul>
           </nav>
           <nav className="auth">
-            <ul>
+            {isloggedIn && (
+                <ul>
+                  <li><Link to="/cart">장바구니</Link></li>
+                  <li><Link to="/orderlist">주문 내역</Link></li>
+                  <li><button onClick={storeLogout}>로그아웃</button></li>
+                </ul>
+            )}
+            {!isloggedIn && (
+              <ul>
                 <li>
-                  <a href="/login">
-                    <LoginIcon />
+                  <Link to="/login"><LoginIcon />
                     로그인
-                  </a>
+                  </Link>
                 </li>
-            </ul>
-            <ul>
                 <li>
-                  <a href="/signUp">
+                  <Link to="/signUp">
                     <SignUpIcon />
                     회원가입
-                  </a>
+                  </Link>
                 </li>
-            </ul>
+              </ul>
+            )}
           </nav>
       </HeaderStyle>
   );
@@ -95,13 +105,16 @@ const HeaderStyle = styled.header`
       display: flex;
       gap: 16px;
       li {
-        a {
+        a, button {
           font-size: 1.5rem;
           font-weight: 600;
           text-decoration: none;
           display: flex;
           align-items: center;
           line-height: 1;
+          background: none;
+          border: 0;
+          cursor: pointer;
 
           svg {
             margin-right: 6px;
