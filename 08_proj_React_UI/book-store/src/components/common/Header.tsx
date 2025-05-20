@@ -2,53 +2,56 @@ import { styled } from "styled-components";
 import logo from "../../assets/images/logo.png";
 
 import { FaSignInAlt, FaRegUser } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Category } from "../../models/category.model";
+import userEvent from "@testing-library/user-event";
+import { fetchCategory } from "../../api/category.api";
+import { useCategory } from "../../hooks/useCategory";
 const LoginIcon = FaSignInAlt as unknown as React.FC;
 const SignUpIcon = FaRegUser as unknown as React.FC;
 
-const CATEGOTY = [
-  { id: null, name: "전체" },
-  { id: 0, name: "동화" },
-  { id: 1, name: "소설" },
-  { id: 2, name: "사회" },
-];
-
 function Header(){
-    return (
-        <HeaderStyle>
-            <h1 className="logo">
+  const { category} = useCategory();
+
+  return (
+      <HeaderStyle>
+          <h1 className="logo">
+            <Link to="/">
               <img src={logo} alt="book store" />
-            </h1>
-            <nav className="category">
-              <ul>
-                {
-                  CATEGOTY.map((item) => (
-                    <li key={item.id}>
-                      <a href={item.id === null ? '/books' : `/books?category_id=${item.id}`}>{item.name}</a>
-                    </li>
-                  ))
-                }
-              </ul>
-            </nav>
-            <nav className="auth">
-              <ul>
-                  <li>
-                    <a href="/login">
-                      <LoginIcon />
-                      로그인
-                    </a>
+            </Link>
+          </h1>
+          <nav className="category">
+            <ul>
+              {
+                category.map((item) => (
+                  <li key={item.id}>
+                    <Link to={item.id === null ? '/books' : `/books?category_id=${item.id}`}>{item.name}</Link>
                   </li>
-              </ul>
-              <ul>
-                  <li>
-                    <a href="/signUp">
-                      <SignUpIcon />
-                      회원가입
-                    </a>
-                  </li>
-              </ul>
-            </nav>
-        </HeaderStyle>
-    );
+                ))
+              }
+            </ul>
+          </nav>
+          <nav className="auth">
+            <ul>
+                <li>
+                  <a href="/login">
+                    <LoginIcon />
+                    로그인
+                  </a>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                  <a href="/signUp">
+                    <SignUpIcon />
+                    회원가입
+                  </a>
+                </li>
+            </ul>
+          </nav>
+      </HeaderStyle>
+  );
 }
 
 const HeaderStyle = styled.header`
